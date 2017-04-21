@@ -59,6 +59,9 @@ class Import
         ];
     }
 
+    /**
+     * @return Customers
+     */
     public function getCustomers()
     {
         $items = $this->getItems();
@@ -99,6 +102,14 @@ class Customers
         }
         $this->customers[$item->summary]->addAddress($item);
     }
+
+    /**
+     * @return Customer[]
+     */
+    public function getCustomers()
+    {
+        return $this->customers;
+    }
 }
 
 class Customer
@@ -124,6 +135,14 @@ class Customer
             $this->addresses[$item->location] = new Address($item->location);
         }
         $this->addresses[$item->location]->addJob($item);
+    }
+
+    /**
+     * @return Address[]
+     */
+    public function getAddresses()
+    {
+        return $this->addresses;
     }
 }
 
@@ -152,6 +171,14 @@ class Address
             $this->jobs[$item->description] = new Job($item->description, isset($item->rrule) ? $item->rrule : null);
         }
         $this->jobs[$item->description]->addBooking($item);
+    }
+
+    /**
+     * @return Job[]
+     */
+    public function getJobs()
+    {
+        return $this->jobs;
     }
 }
 
@@ -222,6 +249,14 @@ class Job
         if (!array_key_exists($item->dtstart, $this->bookings)) {
             $this->bookings[$item->dtstart] = new Booking($item->uid, $item->dtstart);
         }
+    }
+
+    /**
+     * @return Booking[]
+     */
+    public function getBookings()
+    {
+        return $this->bookings;
     }
 }
 
