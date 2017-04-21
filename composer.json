@@ -1,0 +1,28 @@
+{
+    "name": "roundpartner/import-ical",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Tom Lorentsen",
+            "email": "tom@thomaslorentsen.co.uk"
+        }
+    ],
+    "minimum-stability": "stable",
+    "autoload": {
+        "psr-4": {
+            "RoundPartner\\ICal\\Import\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "RoundPartner\\ICal\\Import\\Test\\": "tests/"
+        }
+    },
+    "require": {
+        "johngrogg/ics-parser": "^2.0"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^4.8",
+        "squizlabs/php_codesniffer": "^2.8"
+    }
+}
