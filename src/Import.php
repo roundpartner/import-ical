@@ -262,6 +262,12 @@ class Job
      */
     public function getBookings()
     {
+        if (count($this->bookings)) {
+            if ($this->until > new \DateTime()) {
+                $this->bookings[count($this->bookings)]->completed = 0;
+            }
+        }
+
         return $this->bookings;
     }
 }
@@ -270,10 +276,12 @@ class Booking
 {
     public $date;
     public $id;
+    public $completed;
 
     public function __construct($id, $date)
     {
         $this->id = $id;
+        $this->completed = 1;
         $this->date = new \DateTime($date);
     }
 }
