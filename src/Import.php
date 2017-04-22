@@ -262,10 +262,10 @@ class Job
      */
     public function getBookings()
     {
-        if (count($this->bookings)) {
-            if ($this->until > new \DateTime()) {
-                $this->bookings[count($this->bookings)-1]->completed = 0;
-            }
+        $booking = array_pop($this->bookings);
+        if ($booking && $this->until > new \DateTime()) {
+            $booking->completed = 0;
+            array_push($this->bookings, $booking);
         }
 
         return $this->bookings;
