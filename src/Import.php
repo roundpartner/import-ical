@@ -2,6 +2,7 @@
 
 namespace RoundPartner\ICal\Import;
 
+use ICal\EventObject;
 use ICal\ICal;
 
 class Import
@@ -42,7 +43,7 @@ class Import
     }
 
     /**
-     * @param EventObjects $item
+     * @param EventObject $item
      *
      * @return array
      */
@@ -53,6 +54,7 @@ class Import
             'description' => $item->description,
             'location' => $item->location,
             'date' => new \DateTime($item->dtstart),
+            'end_date' => new \DateTime($item->dtend),
             'sequence' => $item->sequence,
             'rrule' => isset($item->rrule) ? $item->rrule : null,
             'uid' => $item->uid,
@@ -123,7 +125,7 @@ class Customer
     public function __construct($name)
     {
         $this->addresses = array();
-        $this->name = $name;
+        $this->name = trim($name);
     }
 
     /**
@@ -158,7 +160,7 @@ class Address
 
     public function __construct($address)
     {
-        $this->address = $address;
+        $this->address = trim($address);
         $this->jobs = array();
     }
 
@@ -188,6 +190,7 @@ class Job
     public $rule;
     public $interval_type;
     public $interval;
+    public $until;
     /**
      * @var Booking[]
      */
@@ -195,7 +198,7 @@ class Job
 
     public function __construct($job, $rule)
     {
-        $this->job = $job;
+        $this->job = trim($job);
         $this->rule = $rule;
         $this->bookings = array();
 
@@ -213,6 +216,9 @@ class Job
         if (preg_match('/(FREQ=(?P<freq>[A-Z]+))(;UNTIL=(?P<until>[0-9TZ]+))?(;INTERVAL=(?P<interval>[0-9]+))?(;BYMONTHDAY=(?P<bymonthday>[0-9]+))?/', $rule, $matches)) {
             $this->interval_type = $this->getType($matches);
             $this->interval = $this->getInterval($matches);
+            if (array_key_exists('until', $matches)) {
+                $this->until = new \DateTime($matches['until']);
+            }
             return true;
         }
         return false;
