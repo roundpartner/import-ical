@@ -125,7 +125,7 @@ class Customer
     public function __construct($name)
     {
         $this->addresses = array();
-        $this->name = trim($name);
+        $this->name = trim(html_entity_decode(utf8_decode($name)));
     }
 
     /**
@@ -160,7 +160,7 @@ class Address
 
     public function __construct($address)
     {
-        $this->address = trim($address);
+        $this->address = trim(html_entity_decode(utf8_decode($address)));
         $this->jobs = array();
     }
 
@@ -198,7 +198,7 @@ class Job
 
     public function __construct($job, $rule)
     {
-        $this->job = trim($job);
+        $this->job = trim(html_entity_decode(utf8_decode($job)));
         $this->rule = $rule;
         $this->bookings = array();
 
