@@ -7,7 +7,7 @@ class ImportTest extends PHPUnit_Framework_TestCase
 
     public function setUp()
     {
-        $this->filename = dirname(__DIR__) . '/../test.ics';
+        $this->filename = dirname(__DIR__) . '/../test2.ics';
     }
 
     public function testImportCreateInstance()

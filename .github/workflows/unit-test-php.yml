@@ -1,0 +1,29 @@
+name: Unit Test PHP
+
+on: [push]
+
+jobs:
+
+  test:
+    strategy:
+      matrix:
+        php-versions: ['7.0', '7.2']
+    runs-on: ubuntu-latest
+    steps:
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: ${{ matrix.php-versions }}
+          tools: phpunit, composer:v2
+
+      - name: Check out repository code
+        uses: actions/checkout@v3
+
+      - name: Install dependencies
+        run: composer install --prefer-dist
+
+      - name: Lint code
+        run: vendor/bin/phpcs --standard=psr2 ./src
+
+      - name: Run Unit Tests
+        run: vendor/bin/phpunit
